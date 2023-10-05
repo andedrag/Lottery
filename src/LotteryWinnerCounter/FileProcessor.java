@@ -18,9 +18,8 @@ public class FileProcessor {
                 List<String> tickets = Files.readAllLines(Path.of(ticketsFileName));
                 System.out.println("READY");
                 return prepare(tickets);
-            } else {
-                return null;
             }
+                return null;
         } catch (IOException e) { // tovább kéne dobja inkább? Béna itt a 2 return null
             System.out.println("File reading failed.");
             return null;
