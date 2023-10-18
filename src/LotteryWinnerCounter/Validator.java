@@ -10,8 +10,9 @@ public class Validator {
     private static final Pattern LINE_PATTERN = Pattern.compile("(%1$s) (%1$s) (%1$s) (%1$s) (%1$s)".formatted(NUMBER_PATTERN));
     private static final int DRAW_COUNT = 5;
 
+    // Returns
     List<Set<Integer>> validateAndConvert(List<String> tickets) {
-        List<Set<Integer>> validatedTickets = new ArrayList<>();
+        List<Set<Integer>> validatedTickets =  new ArrayList<Set<Integer>>();
         for (String ticket:tickets) {
             ticket.trim();
             Matcher m = LINE_PATTERN.matcher(ticket);
@@ -19,10 +20,12 @@ public class Validator {
                 //TODO log - ticket dropped due to wrong format
             } else {
                 Set<Integer> ticketAsSet = convert(m);
-                validatedTickets.add(Objects.requireNonNull(ticketAsSet));
+                Set<Integer> ticketAsSetSorted = (Set<Integer>) Objects.requireNonNull(ticketAsSet).stream().sorted();
+                validatedTickets.add(ticketAsSetSorted);
             }
         }
         //TODO log
+        Collections.sort(validatedTickets); // Nem értem ezt a hibát :(
         return validatedTickets;
     }
     // convert 1 Lottery ticket from String to Set
