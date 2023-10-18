@@ -22,7 +22,7 @@ public class WinnerCounter {
     int[] countWinners(Map<List<Set<Integer>>, Integer> ticketsAndCombinationCounts) { //Map<Set<Integer>> kéne csak legyen, ezt elírtam pár helyen (FileProcessorban is!)
 
         //TODO
-        ticketsAndCombinationCounts.keySet().stream().forEach(countMatches()); // hogy adom meg az aktális setet az arra vonatkozó stream lépésen belül argumentumként?
+        ticketsAndCombinationCounts.keySet().stream().forEach(countMatches(entry.getKey())); // hogy adom meg az aktális setet az arra vonatkozó stream lépésen belül argumentumként?
         //találatok számát (2-5 esetén) szorozni kell még az azonos szelvények mennyiségével (Map value)
         //switchnek hol a helye? streambe hogyan tudom beépíteni (vagy a countMatchesbe tenni? vagy önálló method? kell neki a Map value még!)
         switch (count) {
