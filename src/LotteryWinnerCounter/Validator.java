@@ -16,35 +16,27 @@ public class Validator {
             ticket.trim();
             Matcher m = LINE_PATTERN.matcher(ticket);
             if (!m.matches()) {
-                //TODO log
+                //TODO log - ticket dropped due to wrong format
             } else {
-                Set<Integer> ticketAsSet = convert(ticket, m);
-               if ()
-            validatedTickets.add(convert(ticket));
+                Set<Integer> ticketAsSet = convert(m);
+                validatedTickets.add(Objects.requireNonNull(ticketAsSet));
             }
         }
         //TODO log
         return validatedTickets;
-
-        /*
-      TODO
-
-        - minden szám csak egyszer szerepelhet egy sorban --> setekké alakítani a sorokat?
-        - log
-      */}
-
-    private Set<Integer> convert(String numbersInLinePatternForm, Matcher m) {
+    }
+    // convert 1 Lottery ticket from String to Set
+    // String parameter should be already validated for LINE_PATTERN
+    // returns null if numbers were repeated within a ticket
+    private Set<Integer> convert(Matcher m) {
         Set<Integer> ticketAsSet = new HashSet<>();
-        //TODO convert algorythm
+        for (int i = 1; i <= DRAW_COUNT; i++) {
+            ticketAsSet.add(Integer.valueOf(m.group(i)));
+        }
         if (ticketAsSet.size() != DRAW_COUNT) {
             //TODO log - ticket dropped due to repeated numbers within
             return null;
         }
         return ticketAsSet;
     }
-
-    private void validate(String numbers) {
-
-
-            }
 }
