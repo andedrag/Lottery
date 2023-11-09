@@ -1,8 +1,12 @@
 package LotteryWinnerCounter;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -11,31 +15,37 @@ import static java.util.Collections.sort;
 
 public class FileProcessor {
 
-    Map<Set<Integer>, Integer> readTicketsList(String ticketsFileName) {
+    private String FILENAME;
+
+    FileProcessor(String fileName) throws FileNotFoundException {
+        FILENAME = fileName;
+    }
+
+    List<byte[]> prepareTicketList(String fileName) {
+        BufferedReader reader;
+        List<byte[]> preparedTicketList = new ArrayList<>();
         try {
-            int lineCount = (int) Files.lines(Path.of(ticketsFileName)).count();
-            if (lineCount > 0 && lineCount <= 10000000) {
-                List<String> tickets = Files.readAllLines(Path.of(ticketsFileName));
-                System.out.println("READY"); // Ez így csalás. LEhet ilyet? Vagy előbb futtassam a cleant, tegyem el változóba, aztán READY és utánA RETURN?
-                return clean(tickets);
-            } else {
-                System.out.println("File length exceeded the acceptable interval.");
-                return null;}
+            reader = new BufferedReader(new FileReader(FILENAME));
+            String line = reader.readLine();
+            byte[] ticketAsByteArray = new byte[Validator.DRAW_COUNT];
+            while (line != null) {
+                String[] ticketAsStringArray = line.split(" ");
+                //Ez a kétszeres átalakítás sem túl hatékony. Hogyan lehetne egyszerűbben byte tömböet kapni a String sorokból?
+                int i = 0;
+                for (String number : ticketAsStringArray) {
+                    ticketAsByteArray[i++] = Byte.parseByte(number);
+                }
+                preparedTicketList.add(ticketAsByteArray);
+                //Ki kell ürtsem a byte tömböt a köv. iteráció előtt?
+                //TODO hibaellenőrzés (pl. mi van, ha 5nél kevesebb vagy több elem volt az adott sorban?) + logolás
+            }
         } catch (IOException e) {
-            System.out.println("File reading failed.");
-            return null;
+            //TODO log
         }
+        Validator.validate(preparedTicketList);
+        System.out.println("READY");
+        return preparedTicketList;
     }
 
-    private Map<Set<Integer>, Integer> clean(List<String> tickets) {
-        Validator validator = new Validator();
-        validator.validateAndConvert(tickets);
-        return countCombinations(tickets);
-    }
 
-    private Map<Set<Integer>, Integer> countCombinations(List<String> tickets) {
-        //TODO minden szelvénykombináció megszámlálása
-        //egyedi kombinációk és mellettük számláló (hány db van belőlük a mapben)
-        return null;
-    }
 }

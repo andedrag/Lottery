@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-// sdsdbskhfb
+
 class Console implements AutoCloseable {
     private final Scanner scanner;
 
@@ -12,7 +12,7 @@ class Console implements AutoCloseable {
         this.scanner = new Scanner(System.in);
     }
 
-    List<Integer> askWinnerNumbers() throws QuitException {
+    List<Integer> askWinnerNumbers() throws QuitException { // formátumot átgondolni! byte[] kéne ide is?
         String input = this.scanner.nextLine();
         if (input.isEmpty()) {
             throw new QuitException("Quitting has been indicated by empty input. Bye!");
