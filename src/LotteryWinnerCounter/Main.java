@@ -1,7 +1,7 @@
 package LotteryWinnerCounter;
 
 import java.io.IOException;
-
+//bármi
 public class Main {
     public static void main(String[] filename) {
         new Main().run(filename[0]);
