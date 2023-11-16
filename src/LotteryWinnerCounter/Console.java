@@ -1,9 +1,7 @@
 package LotteryWinnerCounter;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 class Console implements AutoCloseable {
     private final Scanner scanner;
@@ -12,25 +10,35 @@ class Console implements AutoCloseable {
         this.scanner = new Scanner(System.in);
     }
 
-    List<Integer> askWinnerNumbers() throws QuitException { // formátumot átgondolni! byte[] kéne ide is?
-        String input = this.scanner.nextLine();
+    Set<Byte> askWinnerNumbers() throws QuitException {
+        printTutorials();
+        String input = scanner.nextLine();
         if (input.isEmpty()) {
             throw new QuitException("Quitting has been indicated by empty input. Bye!");
+            // TODO nem user friendly már az első esetnél is így lépni ki, mert ott valószínű, hogy véletlen volt az enter
         } else {
-            return validateInput(input);
+            Set<Byte> inputSet = Transformer.fromStringToByteSet(input);
+            while (!Validator.isValidTicket(inputSet)) {
+                warnForInvalidInput();
+            }
+            return inputSet;
         }
     }
 
-    private List<Integer> validateInput(String input) throws InputMismatchException {
-        List<Integer> inputList = new ArrayList();
+    private void warnForInvalidInput() {
+        System.out.println("Please make sure you type 5 space-separated 0-90 numbers");
+    }
+
+    private void printTutorials() {
         //TODO
-        // regex ellenőrzés
-        // -- hiba esetén exception dobás
-        // -- valid forma esetén List-té alakítás
-        return inputList;
+    }
+
+
+    static void welcome() {
+        //TODO
     }
 
     public void close() {
         this.scanner.close();
-    }
+    } //TODO hol zárom be?!
 }

@@ -1,27 +1,23 @@
 package LotteryWinnerCounter;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class WinnerCounter {
 
-    private static final int[] drawNumbers = new int[Validator.DRAW_COUNT]; // 5 numbers that has been drawn as winner numbers
-    private static final int[] winnerCounts = new int[Validator.DRAW_COUNT-1]; // count of winners with 2, 3, 4 and 5 matches respectively
+    private static final byte[] drawNumbers = new byte[Validator.drawCount]; // 5 numbers that has been drawn as winner numbers
+    private static final int[] winnerCounts = new int[Validator.drawCount - 1]; // count of winners with 2, 3, 4 and 5 matches respectively
+//Mi a helyes megközelítés? Minden találatot megszámláljak (az 1-est is), és csak a nyomtatásnál hagyjam ki? Így rugalmasabb lenne a kód, de ront a hatékonyságon
 
-    WinnerCounter(int nr1, int nr2, int nr3, int nr4, int nr5) {
-        drawNumbers[0] = nr1;
-        drawNumbers[1] = nr2;
-        drawNumbers[2] = nr3;
-        drawNumbers[3] = nr4;
-        drawNumbers[4] = nr5;
-        Arrays.sort(drawNumbers);
+
+    int[] countWinners(List<Set<Byte>> ticketList, Set<Byte> winNrs) {
+        //TODO stream - ticket list set by set -> countMatchesIn1Ticket(winNrs);
+        return winnerCounts;
     }
 
-    int[] countWinners(List<byte[]> ticketList) {
-        int count =0;
-        //TODO ellenőrző ciklus (-> count!)
+    private static void countMatchesIn1Ticket(Set<Byte> winNumbers) {
+        int count = 0;
+        //TODO ellenőrző ciklus (-> merged set size!)
         switch (count) {
             case 2:
                 winnerCounts[0] = count;
@@ -38,8 +34,6 @@ public class WinnerCounter {
             default:
                 // do nothing
         }
-
-        return winnerCounts;
     }
 }
 

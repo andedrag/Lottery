@@ -1,50 +1,36 @@
 package LotteryWinnerCounter;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import static java.util.Collections.sort;
+import java.util.TreeSet;
 
 public class FileProcessor {
 
-    private String FILENAME;
+    private String filename;
 
-    FileProcessor(String fileName) throws FileNotFoundException {
-        FILENAME = fileName;
+    FileProcessor(String filename) { // Path-t vagy File-t jobb lenne megadni String helyett?
+        this.filename = filename;
+        //TODO már itt kéne ellenőrizni, hogy valid file-ról van-e szó
+        // ekkor exceptiont is dobhat - lehet konstruktorban exception dobás?
     }
 
-    List<byte[]> prepareTicketList(String fileName) {
-        BufferedReader reader;
-        List<byte[]> preparedTicketList = new ArrayList<>();
-        try {
-            reader = new BufferedReader(new FileReader(FILENAME));
+    List<Set<Byte>> prepareTicketList() throws IOException {
+        List<Set<Byte>> preparedTicketList = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line = reader.readLine();
-            byte[] ticketAsByteArray = new byte[Validator.DRAW_COUNT];
-            while (line != null) {
-                String[] ticketAsStringArray = line.split(" ");
-                //Ez a kétszeres átalakítás sem túl hatékony. Hogyan lehetne egyszerűbben byte tömböet kapni a String sorokból?
-                int i = 0;
-                for (String number : ticketAsStringArray) {
-                    ticketAsByteArray[i++] = Byte.parseByte(number);
+            Set<Byte> ticket = new TreeSet<>();
+            for (; line != null; reader.readLine()) {
+                ticket = Transformer.fromStringToByteSet(line);
+                if (Validator.isValidTicket(ticket)) {
+                    preparedTicketList.add(ticket);
                 }
-                preparedTicketList.add(ticketAsByteArray);
-                //Ki kell ürtsem a byte tömböt a köv. iteráció előtt?
-                //TODO hibaellenőrzés (pl. mi van, ha 5nél kevesebb vagy több elem volt az adott sorban?) + logolás
             }
-        } catch (IOException e) {
-            //TODO log
+            return preparedTicketList;
         }
-        Validator.validate(preparedTicketList);
-        System.out.println("READY");
-        return preparedTicketList;
     }
 
 

@@ -1,13 +1,17 @@
 package LotteryWinnerCounter;
 
-import java.util.List;
+import java.util.Set;
 
 public class Validator {
 
-    // regex mégis fog kelleni
-    static final int DRAW_COUNT = 5;
+    // TODO regex mégis fog kelleni - legyen a szabályokra egy külön osztály? (Rules)
+    static final int drawCount = 5; // Ez így jó vagy private-nek kellene lennie és getterrel kiszedni?
 
-    static void validate(List<byte[]> preparedTicketList) {
-        //TODO duplikációkat és 0-90 intervallumot ellenőrizni, logolni. A bemeneti fájlt tisztítsa, nem kell új listát vagy tömböt tárolni
+    static boolean isValidTicket(Set<Byte> ticket) {
+        //TODO
+        // 5 db szám --> set méret
+        // 0-90 intervallum
+        // logolni
+        return false; //TODO
     }
 }
