@@ -1,12 +1,12 @@
 package LotteryWinnerCounter;
 
+import java.util.HashSet;
 import java.util.Set;
-import java.util.TreeSet;
 
 public class Transformer {
 
     static Set<Byte> fromStringToByteSet(String line) {
-        Set<Byte> set = new TreeSet<>();
+        Set<Byte> set = new HashSet<>();
         //TODO
         return set;
     }

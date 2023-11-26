@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import static LotteryWinnerCounter.Transformer.fromStringToByteSet;
+import static LotteryWinnerCounter.Validator.isValidTicket;
+
+
 class FileProcessor {
 
     private String filename;
@@ -24,8 +28,8 @@ class FileProcessor {
             String line = reader.readLine();
             Set<Byte> ticket = new TreeSet<>();
             while (line != null) {
-                ticket = Transformer.fromStringToByteSet(line);
-                if (Validator.isValidTicket(ticket)) {
+                ticket = fromStringToByteSet(line);
+                if (isValidTicket(ticket)) {
                     preparedTicketList.add(ticket);
                     line = reader.readLine();
                 }
