@@ -15,6 +15,7 @@ public class Rules_LotteryType5_90 extends Rules {
         return lottery590Instance;
     }
     // Ilyet nem láttam a Factory leírásban - lehet/szokás így singeltonnal kombinálni?
+    // Ez a getLotteryType() csak akkor kéne, ha ez az oezstály használná, nem?
 
     @Override
     Pattern getPattern() {
