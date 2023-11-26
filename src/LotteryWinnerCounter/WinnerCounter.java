@@ -3,7 +3,7 @@ package LotteryWinnerCounter;
 import java.util.List;
 import java.util.Set;
 
-public class WinnerCounter {
+class WinnerCounter {
 
     private static final byte[] drawNumbers = new byte[Validator.drawCount]; // 5 numbers that has been drawn as winner numbers
     private static final int[] winnerCounts = new int[Validator.drawCount - 1]; // count of winners with 2, 3, 4 and 5 matches respectively

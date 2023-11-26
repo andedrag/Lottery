@@ -4,10 +4,18 @@ import java.util.Scanner;
 import java.util.Set;
 
 class Console implements AutoCloseable {
+    private static Console instance;
     private final Scanner scanner;
 
-    Console() {
+    private Console() {
         this.scanner = new Scanner(System.in);
+    }
+
+    static Console getInstance() {
+        if (instance == null) {
+            instance = new Console();
+        }
+        return instance;
     }
 
     Set<Byte> askWinnerNumbers() throws QuitException {
@@ -20,6 +28,7 @@ class Console implements AutoCloseable {
             Set<Byte> inputSet = Transformer.fromStringToByteSet(input);
             while (!Validator.isValidTicket(inputSet)) {
                 warnForInvalidInput();
+                input = scanner.nextLine();
             }
             return inputSet;
         }
@@ -38,7 +47,9 @@ class Console implements AutoCloseable {
         //TODO
     }
 
-    public void close() {
-        this.scanner.close();
-    } //TODO hol zárom be?!
+    @Override
+    public void close() throws Exception {
+        //TODO COnsole-t a Main-ben majd try-with-resources-zal hívni, hogy a scanner be is záródjon.
+    }
+
 }

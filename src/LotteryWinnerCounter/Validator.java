@@ -2,10 +2,10 @@ package LotteryWinnerCounter;
 
 import java.util.Set;
 
-public class Validator {
+class Validator {
 
     // TODO regex mégis fog kelleni - legyen a szabályokra egy külön osztály? (Rules)
-    static final int drawCount = 5; // Ez így jó vagy private-nek kellene lennie és getterrel kiszedni?
+    static final int drawCount = 5;
 
     static boolean isValidTicket(Set<Byte> ticket) {
         //TODO
