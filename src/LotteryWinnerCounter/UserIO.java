@@ -3,17 +3,16 @@ package LotteryWinnerCounter;
 import java.util.Scanner;
 import java.util.Set;
 
-class Console implements AutoCloseable {
-    private static Console instance;
-    private final Scanner scanner;
+class UserIO implements AutoCloseable {
+    private static UserIO instance;
+    private final Scanner scanner = new Scanner(System.in);
 
-    private Console() {
-        this.scanner = new Scanner(System.in);
+    private UserIO() {
     }
 
-    static Console getInstance() {
+    static UserIO getInstance() {
         if (instance == null) {
-            instance = new Console();
+            instance = new UserIO();
         }
         return instance;
     }
@@ -44,7 +43,7 @@ class Console implements AutoCloseable {
 
 
     static void welcome() {
-        //TODO
+        System.out.println(""); //TODO
     }
 
     @Override

@@ -9,7 +9,7 @@ public class Main {
     }
 
     private void run(String filename) {
-        Console.welcome();
+        UserIO.welcome();
         readTickets(filename);
         System.out.println("READY");
         // TODO ask for winner numbers (Console try-catch-csel!)
